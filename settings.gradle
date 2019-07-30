@@ -1,3 +1,10 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name = 'webauthn-server-parent'
 include ':webauthn-server-attestation'
 include ':webauthn-server-core'

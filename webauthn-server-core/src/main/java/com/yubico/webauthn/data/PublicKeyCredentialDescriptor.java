@@ -87,6 +87,7 @@ public class PublicKeyCredentialDescriptor implements Comparable<PublicKeyCreden
         this(type, id, Optional.ofNullable(transports));
     }
 
+    @SuppressWarnings("builder")
     @Override
     public int compareTo(PublicKeyCredentialDescriptor other) {
         int idComparison = id.compareTo(other.id);

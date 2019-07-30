@@ -10,6 +10,7 @@ plugins {
   id 'com.github.kt3k.coveralls' version '2.8.1'
   id 'io.codearte.nexus-staging' version '0.9.0'
   id "io.freefair.lombok" version "3.6.6"
+  id "org.checkerframework" version "0.3.16-SNAPSHOT" apply false
 }
 
 project.ext.isCiBuild = System.env.CI == 'true'
@@ -51,6 +52,8 @@ subprojects {
 
     maven { url "http://repo.maven.apache.org/maven2" }
   }
+
+  apply plugin: 'org.checkerframework'
 }
 
 evaluationDependsOnChildren()
@@ -76,6 +79,18 @@ subprojects { project ->
     from(rootProject.file('COPYING'))
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+  }
+
+  checkerFramework {
+    checkers = ['org.checkerframework.checker.objectconstruction.ObjectConstructionChecker']
+    extraJavacArgs = ['-AsuppressWarnings=type.anno.before']
+    skipVersionCheck = true
+    excludeTests = true
+  }
+
+  dependencies {
+    checkerFramework 'net.msridharan:object-construction:0.1-SNAPSHOT'
+    implementation 'org.checkerframework:object-construction-qual:0.1-SNAPSHOT'
   }
 
   test {
