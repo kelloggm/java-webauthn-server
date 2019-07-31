@@ -10,7 +10,7 @@ plugins {
   id 'com.github.kt3k.coveralls' version '2.8.1'
   id 'io.codearte.nexus-staging' version '0.9.0'
   id "io.freefair.lombok" version "3.6.6"
-  id "org.checkerframework" version "0.3.16"
+  id "org.checkerframework" version "0.3.16" apply false
 }
 
 project.ext.isCiBuild = System.env.CI == 'true'
@@ -52,6 +52,8 @@ subprojects {
 
     maven { url "http://repo.maven.apache.org/maven2" }
   }
+
+  apply plugin: 'org.checkerframework'
 }
 
 evaluationDependsOnChildren()
@@ -68,6 +70,15 @@ subprojects { project ->
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
 
+
+  checkerFramework {
+    checkers = ['org.checkerframework.checker.objectconstruction.ObjectConstructionChecker']
+    extraJavacArgs = ['-AsuppressWarnings=type.anno.before']
+  }
+  dependencies {
+    checkerFramework 'net.sridharan.objectconstruction:object-construction-checker:0.1'
+    implementation 'net.sridharan.objectconstruction:object-construction-qual:0.1'
+  }
 
   tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -182,11 +193,3 @@ tasks.coveralls {
   inputs.files pitestMerge.outputs.files
 }
 
-checkerFramework {
-    checkers = ['org.checkerframework.checker.objectconstruction.ObjectConstructionChecker']
-    extraJavacArgs = ['-AsuppressWarnings=type.anno.before']
-}
-dependencies {
-    checkerFramework 'net.sridharan.objectconstruction:object-construction-checker:0.1'
-    implementation 'net.sridharan.objectconstruction:object-construction-qual:0.1'
-}
