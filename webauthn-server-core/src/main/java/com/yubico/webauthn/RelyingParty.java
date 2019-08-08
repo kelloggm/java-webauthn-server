@@ -55,6 +55,7 @@ import java.util.Set;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
 /**
@@ -295,7 +296,9 @@ public class RelyingParty {
             .extensions(startRegistrationOptions.getExtensions())
             .timeout(startRegistrationOptions.getTimeout())
         ;
-        attestationConveyancePreference.ifPresent(builder::attestation);
+        if (attestationConveyancePreference.isPresent()) {
+            builder.attestation(attestationConveyancePreference.get());
+        }
         return builder.build();
     }
 
@@ -349,7 +352,9 @@ public class RelyingParty {
             .timeout(startAssertionOptions.getTimeout())
         ;
 
-        startAssertionOptions.getUserVerification().ifPresent(pkcro::userVerification);
+        if (startAssertionOptions.getUserVerification().isPresent()) {
+            pkcro.userVerification(startAssertionOptions.getUserVerification().get());
+        }
 
         return AssertionRequest.builder()
             .publicKeyCredentialRequestOptions(
@@ -399,40 +404,10 @@ public class RelyingParty {
             .build();
     }
 
-    public static RelyingPartyBuilder.MandatoryStages builder() {
-        return new RelyingPartyBuilder.MandatoryStages();
-    }
-
     public static class RelyingPartyBuilder {
         private @NonNull Optional<AppId> appId = Optional.empty();
         private @NonNull Optional<AttestationConveyancePreference> attestationConveyancePreference = Optional.empty();
         private @NonNull Optional<MetadataService> metadataService = Optional.empty();
-
-        public static class MandatoryStages {
-            private final RelyingPartyBuilder builder = new RelyingPartyBuilder();
-
-            /**
-             * {@link RelyingPartyBuilder#identity(RelyingPartyIdentity) identity} is a required parameter.
-             *
-             * @see RelyingPartyBuilder#identity(RelyingPartyIdentity)
-             */
-            public Step2 identity(RelyingPartyIdentity identity) {
-                builder.identity(identity);
-                return new Step2();
-            }
-
-            public class Step2 {
-                /**
-                 * {@link RelyingPartyBuilder#credentialRepository(CredentialRepository) credentialRepository} is a
-                 * required parameter.
-                 *
-                 * @see RelyingPartyBuilder#credentialRepository(CredentialRepository)
-                 */
-                public RelyingPartyBuilder credentialRepository(CredentialRepository credentialRepository) {
-                    return builder.credentialRepository(credentialRepository);
-                }
-            }
-        }
 
         /**
          * The extension input to set for the <code>appid</code> extension when initiating authentication operations.
@@ -451,7 +426,7 @@ public class RelyingParty {
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#sctn-appid-extension">§10.1. FIDO AppID Extension
          * (appid)</a>
          */
-        public RelyingPartyBuilder appId(@NonNull Optional<AppId> appId) {
+        public @This RelyingPartyBuilder appId(@NonNull Optional<AppId> appId) {
             this.appId = appId;
             return this;
         }
@@ -473,7 +448,7 @@ public class RelyingParty {
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#sctn-appid-extension">§10.1. FIDO AppID Extension
          * (appid)</a>
          */
-        public RelyingPartyBuilder appId(@NonNull AppId appId) {
+        public @This RelyingPartyBuilder appId(@NonNull AppId appId) {
             return this.appId(Optional.of(appId));
         }
 
@@ -493,7 +468,7 @@ public class RelyingParty {
          * @see PublicKeyCredentialCreationOptions#getAttestation()
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#sctn-attestation">§6.4. Attestation</a>
          */
-        public RelyingPartyBuilder attestationConveyancePreference(@NonNull Optional<AttestationConveyancePreference> attestationConveyancePreference) {
+        public @This RelyingPartyBuilder attestationConveyancePreference(@NonNull Optional<AttestationConveyancePreference> attestationConveyancePreference) {
             this.attestationConveyancePreference = attestationConveyancePreference;
             return this;
         }
@@ -514,7 +489,7 @@ public class RelyingParty {
          * @see PublicKeyCredentialCreationOptions#getAttestation()
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#sctn-attestation">§6.4. Attestation</a>
          */
-        public RelyingPartyBuilder attestationConveyancePreference(@NonNull AttestationConveyancePreference attestationConveyancePreference) {
+        public @This RelyingPartyBuilder attestationConveyancePreference(@NonNull AttestationConveyancePreference attestationConveyancePreference) {
             return this.attestationConveyancePreference(Optional.of(attestationConveyancePreference));
         }
 
@@ -529,7 +504,7 @@ public class RelyingParty {
          * @see PublicKeyCredentialCreationOptions#getAttestation()
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#sctn-attestation">§6.4. Attestation</a>
          */
-        public RelyingPartyBuilder metadataService(@NonNull Optional<MetadataService> metadataService) {
+        public @This RelyingPartyBuilder metadataService(@NonNull Optional<MetadataService> metadataService) {
             this.metadataService = metadataService;
             return this;
         }
@@ -545,7 +520,7 @@ public class RelyingParty {
          * @see PublicKeyCredentialCreationOptions#getAttestation()
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#sctn-attestation">§6.4. Attestation</a>
          */
-        public RelyingPartyBuilder metadataService(@NonNull MetadataService metadataService) {
+        public @This RelyingPartyBuilder metadataService(@NonNull MetadataService metadataService) {
             return this.metadataService(Optional.of(metadataService));
         }
     }

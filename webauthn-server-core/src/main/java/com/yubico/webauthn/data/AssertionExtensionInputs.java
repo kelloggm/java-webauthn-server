@@ -35,6 +35,7 @@ import java.util.Set;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 /**
  * Contains <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#client-extension-input">client extension
@@ -121,7 +122,7 @@ public class AssertionExtensionInputs implements ExtensionInputs {
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#sctn-appid-extension">§10.1. FIDO AppID Extension
          * (appid)</a>
          */
-        public AssertionExtensionInputsBuilder appid(@NonNull Optional<AppId> appid) {
+        public @This AssertionExtensionInputsBuilder appid(@NonNull Optional<AppId> appid) {
             this.appid = appid;
             return this;
         }
@@ -150,7 +151,7 @@ public class AssertionExtensionInputs implements ExtensionInputs {
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#sctn-appid-extension">§10.1. FIDO AppID Extension
          * (appid)</a>
          */
-        public AssertionExtensionInputsBuilder appid(@NonNull AppId appid) {
+        public @This AssertionExtensionInputsBuilder appid(@NonNull AppId appid) {
             return this.appid(Optional.of(appid));
         }
     }

@@ -32,6 +32,7 @@ import java.util.Optional;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 /**
  * Parameters for {@link RelyingParty#finishAssertion(FinishAssertionOptions)}.
@@ -63,27 +64,8 @@ public class FinishAssertionOptions {
     @NonNull
     private final Optional<ByteArray> callerTokenBindingId;
 
-    public static FinishAssertionOptionsBuilder.MandatoryStages builder() {
-        return new FinishAssertionOptionsBuilder.MandatoryStages();
-    }
-
     public static class FinishAssertionOptionsBuilder {
         private Optional<ByteArray> callerTokenBindingId = Optional.empty();
-
-        public static class MandatoryStages {
-            private final FinishAssertionOptionsBuilder builder = new FinishAssertionOptionsBuilder();
-
-            public Step2 request(AssertionRequest request) {
-                builder.request(request);
-                return new Step2();
-            }
-
-            public class Step2 {
-                public FinishAssertionOptionsBuilder response(PublicKeyCredential<AuthenticatorAssertionResponse, ClientAssertionExtensionOutputs> response) {
-                    return builder.response(response);
-                }
-            }
-        }
 
         /**
          * The <a href="https://tools.ietf.org/html/rfc8471#section-3.2">token binding ID</a> of the connection to the
@@ -91,7 +73,7 @@ public class FinishAssertionOptions {
          *
          * @see <a href="https://tools.ietf.org/html/rfc8471">The Token Binding Protocol Version 1.0</a>
          */
-        public FinishAssertionOptionsBuilder callerTokenBindingId(@NonNull Optional<ByteArray> callerTokenBindingId) {
+        public @This FinishAssertionOptionsBuilder callerTokenBindingId(@NonNull Optional<ByteArray> callerTokenBindingId) {
             this.callerTokenBindingId = callerTokenBindingId;
             return this;
         }
@@ -102,7 +84,7 @@ public class FinishAssertionOptions {
          *
          * @see <a href="https://tools.ietf.org/html/rfc8471">The Token Binding Protocol Version 1.0</a>
          */
-        public FinishAssertionOptionsBuilder callerTokenBindingId(@NonNull ByteArray callerTokenBindingId) {
+        public @This FinishAssertionOptionsBuilder callerTokenBindingId(@NonNull ByteArray callerTokenBindingId) {
             return this.callerTokenBindingId(Optional.of(callerTokenBindingId));
         }
     }

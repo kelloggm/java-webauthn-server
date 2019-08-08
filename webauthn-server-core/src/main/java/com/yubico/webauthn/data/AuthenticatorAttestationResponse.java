@@ -96,26 +96,4 @@ public class AuthenticatorAttestationResponse implements AuthenticatorResponse {
         attestation = new AttestationObject(attestationObject);
         this.clientData = new CollectedClientData(clientDataJSON);
     }
-
-    public static AuthenticatorAttestationResponseBuilder.MandatoryStages builder() {
-        return new AuthenticatorAttestationResponseBuilder.MandatoryStages();
-    }
-
-    public static class AuthenticatorAttestationResponseBuilder {
-        public static class MandatoryStages {
-            private final AuthenticatorAttestationResponseBuilder builder = new AuthenticatorAttestationResponseBuilder();
-
-            public Step2 attestationObject(ByteArray attestationObject) {
-                builder.attestationObject(attestationObject);
-                return new Step2();
-            }
-
-            public class Step2 {
-                public AuthenticatorAttestationResponseBuilder clientDataJSON(ByteArray clientDataJSON) {
-                    return builder.clientDataJSON(clientDataJSON);
-                }
-            }
-        }
-    }
-
 }

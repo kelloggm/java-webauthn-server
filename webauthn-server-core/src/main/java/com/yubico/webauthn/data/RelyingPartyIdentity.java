@@ -34,6 +34,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
 /**
@@ -91,27 +92,8 @@ public class RelyingPartyIdentity implements PublicKeyCredentialEntity {
         this(name, id, Optional.ofNullable(icon));
     }
 
-    public static RelyingPartyIdentityBuilder.MandatoryStages builder() {
-        return new RelyingPartyIdentityBuilder.MandatoryStages();
-    }
-
     public static class RelyingPartyIdentityBuilder {
         private @NonNull Optional<URL> icon = Optional.empty();
-
-        public static class MandatoryStages {
-            private RelyingPartyIdentityBuilder builder = new RelyingPartyIdentityBuilder();
-
-            public Step2 id(String id) {
-                builder.id(id);
-                return new Step2();
-            }
-
-            public class Step2 {
-                public RelyingPartyIdentityBuilder name(String name) {
-                    return builder.name(name);
-                }
-            }
-        }
 
         /**
          * A URL which resolves to an image associated with the entity. For example, this could be the Relying Party's
@@ -123,7 +105,7 @@ public class RelyingPartyIdentity implements PublicKeyCredentialEntity {
          * needing more storage.
          * </p>
          */
-        public RelyingPartyIdentityBuilder icon(@NonNull Optional<URL> icon) {
+        public @This RelyingPartyIdentityBuilder icon(@NonNull Optional<URL> icon) {
             this.icon = icon;
             return this;
         }
@@ -138,7 +120,7 @@ public class RelyingPartyIdentity implements PublicKeyCredentialEntity {
          * needing more storage.
          * </p>
          */
-        public RelyingPartyIdentityBuilder icon(@NonNull URL icon) {
+        public @This RelyingPartyIdentityBuilder icon(@NonNull URL icon) {
             return this.icon(Optional.of(icon));
         }
     }

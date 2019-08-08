@@ -33,6 +33,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
 /**
@@ -69,24 +70,8 @@ public class AssertionRequest {
         this(publicKeyCredentialRequestOptions, Optional.ofNullable(username));
     }
 
-    public static AssertionRequestBuilder.MandatoryStages builder() {
-        return new AssertionRequestBuilder.MandatoryStages();
-    }
-
     public static class AssertionRequestBuilder {
         private Optional<String> username = Optional.empty();
-
-        public static class MandatoryStages {
-            private final AssertionRequestBuilder builder = new AssertionRequestBuilder();
-
-            /**
-             * {@link AssertionRequestBuilder#publicKeyCredentialRequestOptions(PublicKeyCredentialRequestOptions)
-             * publicKeyCredentialRequestOptions} is a required parameter.
-             */
-            public AssertionRequestBuilder publicKeyCredentialRequestOptions(PublicKeyCredentialRequestOptions publicKeyCredentialRequestOptions) {
-                return builder.publicKeyCredentialRequestOptions(publicKeyCredentialRequestOptions);
-            }
-        }
 
         /**
          * The username of the user to authenticate, if the user has already been identified.
@@ -96,7 +81,7 @@ public class AssertionRequest {
          * credential</a>, and identification of the user has been deferred until the response is received.
          * </p>
          */
-        public AssertionRequestBuilder username(@NonNull Optional<String> username) {
+        public @This AssertionRequestBuilder username(@NonNull Optional<String> username) {
             this.username = username;
             return this;
         }
@@ -109,7 +94,7 @@ public class AssertionRequest {
          * credential</a>, and identification of the user has been deferred until the response is received.
          * </p>
          */
-        public AssertionRequestBuilder username(@NonNull String username) {
+        public @This AssertionRequestBuilder username(@NonNull String username) {
             return this.username(Optional.of(username));
         }
     }

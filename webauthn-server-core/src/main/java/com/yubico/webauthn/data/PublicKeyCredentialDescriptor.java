@@ -34,6 +34,7 @@ import java.util.TreeSet;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
 /**
@@ -113,26 +114,14 @@ public class PublicKeyCredentialDescriptor implements Comparable<PublicKeyCreden
         return 0;
     }
 
-    public static PublicKeyCredentialDescriptorBuilder.MandatoryStages builder() {
-        return new PublicKeyCredentialDescriptorBuilder.MandatoryStages();
-    }
-
     public static class PublicKeyCredentialDescriptorBuilder {
         private Optional<Set<AuthenticatorTransport>> transports = Optional.empty();
-
-        public static class MandatoryStages {
-            private PublicKeyCredentialDescriptorBuilder builder = new PublicKeyCredentialDescriptorBuilder();
-
-            public PublicKeyCredentialDescriptorBuilder id(ByteArray id) {
-                return builder.id(id);
-            }
-        }
 
         /**
          * An OPTIONAL hint as to how the client might communicate with the managing authenticator of the public key
          * credential the caller is referring to.
          */
-        public PublicKeyCredentialDescriptorBuilder transports(@NonNull Optional<Set<AuthenticatorTransport>> transports) {
+        public @This PublicKeyCredentialDescriptorBuilder transports(@NonNull Optional<Set<AuthenticatorTransport>> transports) {
             this.transports = transports;
             return this;
         }
@@ -141,7 +130,7 @@ public class PublicKeyCredentialDescriptor implements Comparable<PublicKeyCreden
          * An OPTIONAL hint as to how the client might communicate with the managing authenticator of the public key
          * credential the caller is referring to.
          */
-        public PublicKeyCredentialDescriptorBuilder transports(@NonNull Set<AuthenticatorTransport> transports) {
+        public @This PublicKeyCredentialDescriptorBuilder transports(@NonNull Set<AuthenticatorTransport> transports) {
             return this.transports(Optional.of(transports));
         }
     }

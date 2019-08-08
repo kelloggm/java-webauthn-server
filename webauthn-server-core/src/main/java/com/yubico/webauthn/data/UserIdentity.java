@@ -34,6 +34,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
 /**
@@ -136,35 +137,8 @@ public class UserIdentity implements PublicKeyCredentialEntity {
         this(name, displayName, id, Optional.ofNullable(icon));
     }
 
-    public static UserIdentityBuilder.MandatoryStages builder() {
-        return new UserIdentityBuilder.MandatoryStages();
-    }
-
     public static class UserIdentityBuilder {
         private @NonNull Optional<URL> icon = Optional.empty();
-
-        public static class MandatoryStages {
-            private UserIdentityBuilder builder = new UserIdentityBuilder();
-
-            public Step2 name(String name) {
-                builder.name(name);
-                return new Step2();
-            }
-
-            public class Step2 {
-                public Step3 displayName(String displayName) {
-                    builder.displayName(displayName);
-                    return new Step3();
-                }
-            }
-
-            public class Step3 {
-                public UserIdentityBuilder id(ByteArray id) {
-                    return builder.id(id);
-                }
-
-            }
-        }
 
         /**
          * A URL which resolves to an image associated with the entity. For example, this could be the user’s avatar.
@@ -175,7 +149,7 @@ public class UserIdentity implements PublicKeyCredentialEntity {
          * needing more storage.
          * </p>
          */
-        public UserIdentityBuilder icon(@NonNull Optional<URL> icon) {
+        public @This UserIdentityBuilder icon(@NonNull Optional<URL> icon) {
             this.icon = icon;
             return this;
         }
@@ -189,7 +163,7 @@ public class UserIdentity implements PublicKeyCredentialEntity {
          * needing more storage.
          * </p>
          */
-        public UserIdentityBuilder icon(@NonNull URL icon) {
+        public @This UserIdentityBuilder icon(@NonNull URL icon) {
             return this.icon(Optional.of(icon));
         }
     }

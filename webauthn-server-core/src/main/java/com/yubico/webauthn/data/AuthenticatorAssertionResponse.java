@@ -33,6 +33,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
 /**
@@ -105,41 +106,15 @@ public class AuthenticatorAssertionResponse implements AuthenticatorResponse {
         );
     }
 
-    public static AuthenticatorAssertionResponseBuilder.MandatoryStages builder() {
-        return new AuthenticatorAssertionResponseBuilder.MandatoryStages();
-    }
-
     public static class AuthenticatorAssertionResponseBuilder {
         private Optional<ByteArray> userHandle = Optional.empty();
-
-        public static class MandatoryStages {
-            private final AuthenticatorAssertionResponseBuilder builder = new AuthenticatorAssertionResponseBuilder();
-
-            public Step2 authenticatorData(ByteArray authenticatorData) {
-                builder.authenticatorData(authenticatorData);
-                return new Step2();
-            }
-
-            public class Step2 {
-                public Step3 clientDataJSON(ByteArray clientDataJSON) {
-                    builder.clientDataJSON(clientDataJSON);
-                    return new Step3();
-                }
-            }
-
-            public class Step3 {
-                public AuthenticatorAssertionResponseBuilder signature(ByteArray signature) {
-                    return builder.signature(signature);
-                }
-            }
-        }
 
         /**
          * The user handle returned from the authenticator, or empty if the authenticator did not return a user handle. See
          * <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#op-get-assertion">§6.3.3 The authenticatorGetAssertion
          * Operation</a>.
          */
-        public AuthenticatorAssertionResponseBuilder userHandle(@NonNull Optional<ByteArray> userHandle) {
+        public @This AuthenticatorAssertionResponseBuilder userHandle(@NonNull Optional<ByteArray> userHandle) {
             this.userHandle = userHandle;
             return this;
         }
@@ -149,7 +124,7 @@ public class AuthenticatorAssertionResponse implements AuthenticatorResponse {
          * <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#op-get-assertion">§6.3.3 The authenticatorGetAssertion
          * Operation</a>.
          */
-        public AuthenticatorAssertionResponseBuilder userHandle(@NonNull ByteArray userHandle) {
+        public @This AuthenticatorAssertionResponseBuilder userHandle(@NonNull ByteArray userHandle) {
             return this.userHandle(Optional.of(userHandle));
         }
     }

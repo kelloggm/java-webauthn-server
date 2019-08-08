@@ -31,6 +31,7 @@ import java.util.Optional;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 /**
  * Parameters for {@link RelyingParty#startAssertion(StartAssertionOptions)}.
@@ -113,7 +114,7 @@ public class StartAssertionOptions {
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#client-side-resident-public-key-credential-source">Client-side-resident
          * credential</a>
          */
-        public StartAssertionOptionsBuilder username(@NonNull Optional<String> username) {
+        public @This StartAssertionOptionsBuilder username(@NonNull Optional<String> username) {
             this.username = username;
             return this;
         }
@@ -132,7 +133,7 @@ public class StartAssertionOptions {
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#client-side-resident-public-key-credential-source">Client-side-resident
          * credential</a>
          */
-        public StartAssertionOptionsBuilder username(@NonNull String username) {
+        public @This StartAssertionOptionsBuilder username(@NonNull String username) {
             return this.username(Optional.of(username));
         }
 
@@ -142,7 +143,7 @@ public class StartAssertionOptions {
          * The default is {@link UserVerificationRequirement#PREFERRED}.
          * </p>
          */
-        public StartAssertionOptionsBuilder userVerification(@NonNull Optional<UserVerificationRequirement> userVerification) {
+        public @This StartAssertionOptionsBuilder userVerification(@NonNull Optional<UserVerificationRequirement> userVerification) {
             this.userVerification = userVerification;
             return this;
         }
@@ -153,7 +154,7 @@ public class StartAssertionOptions {
          * The default is {@link UserVerificationRequirement#PREFERRED}.
          * </p>
          */
-        public StartAssertionOptionsBuilder userVerification(@NonNull UserVerificationRequirement userVerification) {
+        public @This StartAssertionOptionsBuilder userVerification(@NonNull UserVerificationRequirement userVerification) {
             return this.userVerification(Optional.of(userVerification));
         }
 
@@ -168,7 +169,7 @@ public class StartAssertionOptions {
          * The default is empty.
          * </p>
          */
-        public StartAssertionOptionsBuilder timeout(@NonNull Optional<Long> timeout) {
+        public @This StartAssertionOptionsBuilder timeout(@NonNull Optional<Long> timeout) {
             if (timeout.isPresent() && timeout.get() <= 0) {
                 throw new IllegalArgumentException("timeout must be positive, was: " + timeout.get());
             }
@@ -187,7 +188,7 @@ public class StartAssertionOptions {
          * The default is empty.
          * </p>
          */
-        public StartAssertionOptionsBuilder timeout(long timeout) {
+        public @This StartAssertionOptionsBuilder timeout(long timeout) {
             return this.timeout(Optional.of(timeout));
         }
     }

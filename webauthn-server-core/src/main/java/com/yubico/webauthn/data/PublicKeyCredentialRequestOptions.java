@@ -32,6 +32,7 @@ import java.util.Optional;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
 /**
@@ -139,22 +140,10 @@ public class PublicKeyCredentialRequestOptions {
         );
     }
 
-    public static PublicKeyCredentialRequestOptionsBuilder.MandatoryStages builder() {
-        return new PublicKeyCredentialRequestOptionsBuilder.MandatoryStages();
-    }
-
     public static class PublicKeyCredentialRequestOptionsBuilder {
         private @NonNull Optional<Long> timeout = Optional.empty();
         private @NonNull Optional<String> rpId = Optional.empty();
         private @NonNull Optional<List<PublicKeyCredentialDescriptor>> allowCredentials = Optional.empty();
-
-        public static class MandatoryStages {
-            private PublicKeyCredentialRequestOptionsBuilder builder = new PublicKeyCredentialRequestOptionsBuilder();
-
-            public PublicKeyCredentialRequestOptionsBuilder challenge(ByteArray challenge) {
-                return builder.challenge(challenge);
-            }
-        }
 
         /**
          * Specifies a time, in milliseconds, that the caller is willing to wait for the call to complete.
@@ -162,7 +151,7 @@ public class PublicKeyCredentialRequestOptions {
          * This is treated as a hint, and MAY be overridden by the client.
          * </p>
          */
-        public PublicKeyCredentialRequestOptionsBuilder timeout(@NonNull Optional<Long> timeout) {
+        public @This PublicKeyCredentialRequestOptionsBuilder timeout(@NonNull Optional<Long> timeout) {
             this.timeout = timeout;
             return this;
         }
@@ -173,7 +162,7 @@ public class PublicKeyCredentialRequestOptions {
          * This is treated as a hint, and MAY be overridden by the client.
          * </p>
          */
-        public PublicKeyCredentialRequestOptionsBuilder timeout(long timeout) {
+        public @This PublicKeyCredentialRequestOptionsBuilder timeout(long timeout) {
             return this.timeout(Optional.of(timeout));
         }
 
@@ -183,7 +172,7 @@ public class PublicKeyCredentialRequestOptions {
          * If omitted, its value will be set by the client.
          * </p>
          */
-        public PublicKeyCredentialRequestOptionsBuilder rpId(@NonNull Optional<String> rpId) {
+        public @This PublicKeyCredentialRequestOptionsBuilder rpId(@NonNull Optional<String> rpId) {
             this.rpId = rpId;
             return this;
         }
@@ -194,7 +183,7 @@ public class PublicKeyCredentialRequestOptions {
          * If omitted, its value will be set by the client.
          * </p>
          */
-        public PublicKeyCredentialRequestOptionsBuilder rpId(@NonNull String rpId) {
+        public @This PublicKeyCredentialRequestOptionsBuilder rpId(@NonNull String rpId) {
             return this.rpId(Optional.of(rpId));
         }
 
@@ -203,7 +192,7 @@ public class PublicKeyCredentialRequestOptions {
          * caller, in descending order of the caller’s preference (the first item in the list is the most preferred
          * credential, and so on down the list).
          */
-        public PublicKeyCredentialRequestOptionsBuilder allowCredentials(@NonNull Optional<List<PublicKeyCredentialDescriptor>> allowCredentials) {
+        public @This PublicKeyCredentialRequestOptionsBuilder allowCredentials(@NonNull Optional<List<PublicKeyCredentialDescriptor>> allowCredentials) {
             this.allowCredentials = allowCredentials;
             return this;
         }
@@ -213,7 +202,7 @@ public class PublicKeyCredentialRequestOptions {
          * caller, in descending order of the caller’s preference (the first item in the list is the most preferred
          * credential, and so on down the list).
          */
-        public PublicKeyCredentialRequestOptionsBuilder allowCredentials(@NonNull List<PublicKeyCredentialDescriptor> allowCredentials) {
+        public @This PublicKeyCredentialRequestOptionsBuilder allowCredentials(@NonNull List<PublicKeyCredentialDescriptor> allowCredentials) {
             return this.allowCredentials(Optional.of(allowCredentials));
         }
     }

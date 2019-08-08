@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
 /**
@@ -77,18 +78,4 @@ public class PublicKeyCredentialParameters {
      * Algorithm {@link COSEAlgorithmIdentifier#RS256} and type {@link PublicKeyCredentialType#PUBLIC_KEY}.
      */
     public static final PublicKeyCredentialParameters RS256 = builder().alg(COSEAlgorithmIdentifier.RS256).build();
-
-    public static PublicKeyCredentialParametersBuilder.MandatoryStages builder() {
-        return new PublicKeyCredentialParametersBuilder.MandatoryStages();
-    }
-
-    public static class PublicKeyCredentialParametersBuilder {
-        public static class MandatoryStages {
-            private PublicKeyCredentialParametersBuilder builder = new PublicKeyCredentialParametersBuilder();
-
-            public PublicKeyCredentialParametersBuilder alg(COSEAlgorithmIdentifier alg) {
-                return builder.alg(alg);
-            }
-        }
-    }
 }

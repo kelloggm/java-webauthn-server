@@ -35,6 +35,7 @@ import java.util.TreeSet;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
 /**
@@ -174,61 +175,16 @@ public class PublicKeyCredentialCreationOptions {
         );
     }
 
-    public static PublicKeyCredentialCreationOptionsBuilder.MandatoryStages builder() {
-        return new PublicKeyCredentialCreationOptionsBuilder.MandatoryStages();
-    }
-
     public static class PublicKeyCredentialCreationOptionsBuilder {
         private @NonNull Optional<Long> timeout = Optional.empty();
         private @NonNull Optional<Set<PublicKeyCredentialDescriptor>> excludeCredentials = Optional.empty();
         private @NonNull Optional<AuthenticatorSelectionCriteria> authenticatorSelection = Optional.empty();
 
-        public static class MandatoryStages {
-            private PublicKeyCredentialCreationOptionsBuilder builder = new PublicKeyCredentialCreationOptionsBuilder();
-
-            /**
-             * @see PublicKeyCredentialCreationOptions#getRp()
-             */
-            public Step2 rp(RelyingPartyIdentity rp) {
-                builder.rp(rp);
-                return new Step2();
-            }
-
-            /**
-             * @see PublicKeyCredentialCreationOptions#getUser()
-             */
-            public class Step2 {
-                public Step3 user(UserIdentity user) {
-                    builder.user(user);
-                    return new Step3();
-                }
-            }
-
-            /**
-             * @see PublicKeyCredentialCreationOptions#getChallenge()
-             */
-            public class Step3 {
-                public Step4 challenge(ByteArray challenge) {
-                    builder.challenge(challenge);
-                    return new Step4();
-                }
-            }
-
-            /**
-             * @see PublicKeyCredentialCreationOptions#getPubKeyCredParams()
-             */
-            public class Step4 {
-                public PublicKeyCredentialCreationOptionsBuilder pubKeyCredParams(List<PublicKeyCredentialParameters> pubKeyCredParams) {
-                    return builder.pubKeyCredParams(pubKeyCredParams);
-                }
-            }
-        }
-
         /**
          * A time, in milliseconds, that the caller is willing to wait for the call to complete. This is treated as a hint,
          * and MAY be overridden by the client.
          */
-        public PublicKeyCredentialCreationOptionsBuilder timeout(@NonNull Optional<Long> timeout) {
+        public @This PublicKeyCredentialCreationOptionsBuilder timeout(@NonNull Optional<Long> timeout) {
             this.timeout = timeout;
             return this;
         }
@@ -237,7 +193,7 @@ public class PublicKeyCredentialCreationOptions {
          * A time, in milliseconds, that the caller is willing to wait for the call to complete. This is treated as a hint,
          * and MAY be overridden by the client.
          */
-        public PublicKeyCredentialCreationOptionsBuilder timeout(long timeout) {
+        public @This PublicKeyCredentialCreationOptionsBuilder timeout(long timeout) {
             return this.timeout(Optional.of(timeout));
         }
 
@@ -246,7 +202,7 @@ public class PublicKeyCredentialCreationOptions {
          * on a single authenticator. The client is requested to return an error if the new credential would be created on
          * an authenticator that also contains one of the credentials enumerated in this parameter.
          */
-        public PublicKeyCredentialCreationOptionsBuilder excludeCredentials(@NonNull Optional<Set<PublicKeyCredentialDescriptor>> excludeCredentials) {
+        public @This PublicKeyCredentialCreationOptionsBuilder excludeCredentials(@NonNull Optional<Set<PublicKeyCredentialDescriptor>> excludeCredentials) {
             this.excludeCredentials = excludeCredentials;
             return this;
         }
@@ -256,7 +212,7 @@ public class PublicKeyCredentialCreationOptions {
          * on a single authenticator. The client is requested to return an error if the new credential would be created on
          * an authenticator that also contains one of the credentials enumerated in this parameter.
          */
-        public PublicKeyCredentialCreationOptionsBuilder excludeCredentials(@NonNull Set<PublicKeyCredentialDescriptor> excludeCredentials) {
+        public @This PublicKeyCredentialCreationOptionsBuilder excludeCredentials(@NonNull Set<PublicKeyCredentialDescriptor> excludeCredentials) {
             return this.excludeCredentials(Optional.of(excludeCredentials));
         }
 
@@ -264,7 +220,7 @@ public class PublicKeyCredentialCreationOptions {
          * Intended for use by Relying Parties that wish to select the appropriate authenticators to participate in the
          * create() operation.
          */
-        public PublicKeyCredentialCreationOptionsBuilder authenticatorSelection(@NonNull Optional<AuthenticatorSelectionCriteria> authenticatorSelection) {
+        public @This PublicKeyCredentialCreationOptionsBuilder authenticatorSelection(@NonNull Optional<AuthenticatorSelectionCriteria> authenticatorSelection) {
             this.authenticatorSelection = authenticatorSelection;
             return this;
         }
@@ -273,7 +229,7 @@ public class PublicKeyCredentialCreationOptions {
          * Intended for use by Relying Parties that wish to select the appropriate authenticators to participate in the
          * create() operation.
          */
-        public PublicKeyCredentialCreationOptionsBuilder authenticatorSelection(@NonNull AuthenticatorSelectionCriteria authenticatorSelection) {
+        public @This PublicKeyCredentialCreationOptionsBuilder authenticatorSelection(@NonNull AuthenticatorSelectionCriteria authenticatorSelection) {
             return this.authenticatorSelection(Optional.of(authenticatorSelection));
         }
     }

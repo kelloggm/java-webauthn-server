@@ -32,6 +32,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
 /**
@@ -89,7 +90,7 @@ public class AuthenticatorSelectionCriteria {
          * href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#attachment">§5.4.5 Authenticator Attachment Enumeration
          * (enum AuthenticatorAttachment)</a>.
          */
-        public AuthenticatorSelectionCriteriaBuilder authenticatorAttachment(@NonNull Optional<AuthenticatorAttachment> authenticatorAttachment) {
+        public @This AuthenticatorSelectionCriteriaBuilder authenticatorAttachment(@NonNull Optional<AuthenticatorAttachment> authenticatorAttachment) {
             this.authenticatorAttachment = authenticatorAttachment;
             return this;
         }
@@ -99,7 +100,7 @@ public class AuthenticatorSelectionCriteria {
          * href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#attachment">§5.4.5 Authenticator Attachment Enumeration
          * (enum AuthenticatorAttachment)</a>.
          */
-        public AuthenticatorSelectionCriteriaBuilder authenticatorAttachment(@NonNull AuthenticatorAttachment authenticatorAttachment) {
+        public @This AuthenticatorSelectionCriteriaBuilder authenticatorAttachment(@NonNull AuthenticatorAttachment authenticatorAttachment) {
             return this.authenticatorAttachment(Optional.of(authenticatorAttachment));
         }
     }

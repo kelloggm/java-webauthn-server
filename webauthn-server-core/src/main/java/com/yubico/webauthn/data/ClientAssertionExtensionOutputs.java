@@ -32,6 +32,7 @@ import java.util.Set;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.returnsrcvr.qual.This;
 
 /**
  * Contains <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#client-extension-output">client extension
@@ -97,7 +98,7 @@ public class ClientAssertionExtensionOutputs implements ClientExtensionOutputs {
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#sctn-appid-extension">§10.1. FIDO AppID Extension
          * (appid)</a>
          */
-        public ClientAssertionExtensionOutputsBuilder appid(@NonNull Optional<Boolean> appid) {
+        public @This ClientAssertionExtensionOutputsBuilder appid(@NonNull Optional<Boolean> appid) {
             this.appid = appid;
             return this;
         }
@@ -113,7 +114,7 @@ public class ClientAssertionExtensionOutputs implements ClientExtensionOutputs {
          * @see <a href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#sctn-appid-extension">§10.1. FIDO AppID Extension
          * (appid)</a>
          */
-        public ClientAssertionExtensionOutputsBuilder appid(boolean appid) {
+        public @This ClientAssertionExtensionOutputsBuilder appid(boolean appid) {
             return this.appid(Optional.of(appid));
         }
     }
