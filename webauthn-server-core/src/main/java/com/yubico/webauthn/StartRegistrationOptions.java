@@ -51,7 +51,8 @@ public class StartRegistrationOptions {
      * Constraints on what kind of authenticator the user is allowed to use to create the credential.
      */
     @NonNull
-    private final Optional<AuthenticatorSelectionCriteria> authenticatorSelection;
+    @Builder.Default
+    private final Optional<AuthenticatorSelectionCriteria> authenticatorSelection = Optional.empty();
 
     /**
      * Extension inputs for this registration operation.
@@ -72,17 +73,16 @@ public class StartRegistrationOptions {
      * </p>
      */
     @NonNull
-    private final Optional<Long> timeout;
+    @Builder.Default
+    private final Optional<Long> timeout = Optional.empty();
 
     public static class StartRegistrationOptionsBuilder {
-        private @NonNull Optional<AuthenticatorSelectionCriteria> authenticatorSelection = Optional.empty();
-        private @NonNull Optional<Long> timeout = Optional.empty();
-
         /**
          * Constraints on what kind of authenticator the user is allowed to use to create the credential.
          */
         public @This StartRegistrationOptionsBuilder authenticatorSelection(@NonNull Optional<AuthenticatorSelectionCriteria> authenticatorSelection) {
             this.authenticatorSelection = authenticatorSelection;
+            this.authenticatorSelection$set = true;
             return this;
         }
 
@@ -109,6 +109,7 @@ public class StartRegistrationOptions {
                 throw new IllegalArgumentException("timeout must be positive, was: " + timeout.get());
             }
             this.timeout = timeout;
+            this.timeout$set = true;
             return this;
         }
 

@@ -125,7 +125,8 @@ public class UserIdentity implements PublicKeyCredentialEntity {
      */
     @NonNull
     @Getter(onMethod = @__({ @Override }))
-    private final Optional<URL> icon;
+    @Builder.Default
+    private final Optional<URL> icon = Optional.empty();
 
     @JsonCreator
     private UserIdentity(
@@ -138,8 +139,6 @@ public class UserIdentity implements PublicKeyCredentialEntity {
     }
 
     public static class UserIdentityBuilder {
-        private @NonNull Optional<URL> icon = Optional.empty();
-
         /**
          * A URL which resolves to an image associated with the entity. For example, this could be the user’s avatar.
          *
@@ -151,6 +150,7 @@ public class UserIdentity implements PublicKeyCredentialEntity {
          */
         public @This UserIdentityBuilder icon(@NonNull Optional<URL> icon) {
             this.icon = icon;
+            this.icon$set = true;
             return this;
         }
 

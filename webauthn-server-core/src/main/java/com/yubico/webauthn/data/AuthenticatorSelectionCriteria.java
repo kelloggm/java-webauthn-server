@@ -53,7 +53,8 @@ public class AuthenticatorSelectionCriteria {
      * (enum AuthenticatorAttachment)</a>.
      */
     @NonNull
-    private final Optional<AuthenticatorAttachment> authenticatorAttachment;
+    @Builder.Default
+    private final Optional<AuthenticatorAttachment> authenticatorAttachment = Optional.empty();
 
     /**
      * Describes the Relying Party's requirements regarding resident credentials. If set to <code>true</code>, the
@@ -83,8 +84,6 @@ public class AuthenticatorSelectionCriteria {
     }
 
     public static class AuthenticatorSelectionCriteriaBuilder {
-        private @NonNull Optional<AuthenticatorAttachment> authenticatorAttachment = Optional.empty();
-
         /**
          * If present, eligible authenticators are filtered to only authenticators attached with the specified <a
          * href="https://www.w3.org/TR/2019/PR-webauthn-20190117/#attachment">§5.4.5 Authenticator Attachment Enumeration
@@ -92,6 +91,7 @@ public class AuthenticatorSelectionCriteria {
          */
         public @This AuthenticatorSelectionCriteriaBuilder authenticatorAttachment(@NonNull Optional<AuthenticatorAttachment> authenticatorAttachment) {
             this.authenticatorAttachment = authenticatorAttachment;
+            this.authenticatorAttachment$set = true;
             return this;
         }
 

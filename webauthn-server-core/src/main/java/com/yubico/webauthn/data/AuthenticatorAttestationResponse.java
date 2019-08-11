@@ -84,7 +84,7 @@ public class AuthenticatorAttestationResponse implements AuthenticatorResponse {
         return attestation.getAuthenticatorData().getBytes();
     }
 
-    @Builder(toBuilder = true)
+    @Builder//(toBuilder = true)
     @JsonCreator
     private AuthenticatorAttestationResponse(
         @NonNull @JsonProperty("attestationObject") ByteArray attestationObject,
@@ -95,5 +95,10 @@ public class AuthenticatorAttestationResponse implements AuthenticatorResponse {
 
         attestation = new AttestationObject(attestationObject);
         this.clientData = new CollectedClientData(clientDataJSON);
+    }
+
+    @SuppressWarnings("builder") // toBuilder's return type should respect the arguments to the constructor that builder is applied to: https://github.com/kelloggm/object-construction-checker/issues/83
+    public AuthenticatorAttestationResponseBuilder toBuilder() {
+        return new AuthenticatorAttestationResponseBuilder().attestationObject(this.attestationObject).clientDataJSON(this.clientDataJSON);
     }
 }

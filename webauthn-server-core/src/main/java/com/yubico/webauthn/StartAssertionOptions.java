@@ -55,7 +55,8 @@ public class StartAssertionOptions {
      * credential</a>
      */
     @NonNull
-    private final Optional<String> username;
+    @Builder.Default
+    private final Optional<String> username = Optional.empty();
 
     /**
      * Extension inputs for this authentication operation.
@@ -79,7 +80,8 @@ public class StartAssertionOptions {
      * </p>
      */
     @NonNull
-    private final Optional<UserVerificationRequirement> userVerification;
+    @Builder.Default
+    private final Optional<UserVerificationRequirement> userVerification = Optional.empty();
 
     /**
      * The value for {@link PublicKeyCredentialRequestOptions#getTimeout()} for this authentication operation.
@@ -93,13 +95,10 @@ public class StartAssertionOptions {
      * </p>
      */
     @NonNull
-    private final Optional<Long> timeout;
+    @Builder.Default
+    private final Optional<Long> timeout = Optional.empty();
 
     public static class StartAssertionOptionsBuilder {
-        private @NonNull Optional<String> username = Optional.empty();
-        private @NonNull Optional<UserVerificationRequirement> userVerification = Optional.empty();
-        private @NonNull Optional<Long> timeout = Optional.empty();
-
         /**
          * The username of the user to authenticate, if the user has already been identified.
          * <p>
@@ -116,6 +115,7 @@ public class StartAssertionOptions {
          */
         public @This StartAssertionOptionsBuilder username(@NonNull Optional<String> username) {
             this.username = username;
+            this.username$set = true;
             return this;
         }
 
@@ -145,6 +145,7 @@ public class StartAssertionOptions {
          */
         public @This StartAssertionOptionsBuilder userVerification(@NonNull Optional<UserVerificationRequirement> userVerification) {
             this.userVerification = userVerification;
+            this.userVerification$set = true;
             return this;
         }
 
@@ -174,6 +175,7 @@ public class StartAssertionOptions {
                 throw new IllegalArgumentException("timeout must be positive, was: " + timeout.get());
             }
             this.timeout = timeout;
+            this.timeout$set = true;
             return this;
         }
 

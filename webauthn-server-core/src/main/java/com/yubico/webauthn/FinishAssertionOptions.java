@@ -62,11 +62,10 @@ public class FinishAssertionOptions {
      * @see <a href="https://tools.ietf.org/html/rfc8471">The Token Binding Protocol Version 1.0</a>
      */
     @NonNull
-    private final Optional<ByteArray> callerTokenBindingId;
+    @Builder.Default
+    private final Optional<ByteArray> callerTokenBindingId = Optional.empty();
 
     public static class FinishAssertionOptionsBuilder {
-        private Optional<ByteArray> callerTokenBindingId = Optional.empty();
-
         /**
          * The <a href="https://tools.ietf.org/html/rfc8471#section-3.2">token binding ID</a> of the connection to the
          * client, if any.
@@ -75,6 +74,7 @@ public class FinishAssertionOptions {
          */
         public @This FinishAssertionOptionsBuilder callerTokenBindingId(@NonNull Optional<ByteArray> callerTokenBindingId) {
             this.callerTokenBindingId = callerTokenBindingId;
+            this.callerTokenBindingId$set = true;
             return this;
         }
 

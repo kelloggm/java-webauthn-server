@@ -81,7 +81,8 @@ public class RelyingPartyIdentity implements PublicKeyCredentialEntity {
      */
     @NonNull
     @Getter(onMethod = @__({ @Override }))
-    private final Optional<URL> icon;
+    @Builder.Default
+    private final Optional<URL> icon = Optional.empty();
 
     @JsonCreator
     private RelyingPartyIdentity(
@@ -93,8 +94,6 @@ public class RelyingPartyIdentity implements PublicKeyCredentialEntity {
     }
 
     public static class RelyingPartyIdentityBuilder {
-        private @NonNull Optional<URL> icon = Optional.empty();
-
         /**
          * A URL which resolves to an image associated with the entity. For example, this could be the Relying Party's
          * logo.
@@ -107,6 +106,7 @@ public class RelyingPartyIdentity implements PublicKeyCredentialEntity {
          */
         public @This RelyingPartyIdentityBuilder icon(@NonNull Optional<URL> icon) {
             this.icon = icon;
+            this.icon$set = true;
             return this;
         }
 

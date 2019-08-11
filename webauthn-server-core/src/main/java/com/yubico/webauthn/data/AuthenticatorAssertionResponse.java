@@ -33,6 +33,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
+import org.checkerframework.checker.objectconstruction.qual.CalledMethods;
 import org.checkerframework.checker.returnsrcvr.qual.This;
 
 
@@ -77,7 +78,7 @@ public class AuthenticatorAssertionResponse implements AuthenticatorResponse {
     @Getter(onMethod = @__({ @Override }))
     private final transient CollectedClientData clientData;
 
-    @Builder(toBuilder = true)
+    @Builder//(toBuilder = true)
     private AuthenticatorAssertionResponse(
         @NonNull final ByteArray authenticatorData,
         @NonNull final ByteArray clientDataJSON,
@@ -129,4 +130,8 @@ public class AuthenticatorAssertionResponse implements AuthenticatorResponse {
         }
     }
 
+    @SuppressWarnings("builder") // toBuilder's return type should respect the arguments to the constructor that builder is applied to: https://github.com/kelloggm/object-construction-checker/issues/83
+    public AuthenticatorAssertionResponseBuilder toBuilder() {
+        return new AuthenticatorAssertionResponseBuilder().authenticatorData(this.authenticatorData).clientDataJSON(this.clientDataJSON).signature(this.signature).userHandle(this.userHandle);
+    }
 }
