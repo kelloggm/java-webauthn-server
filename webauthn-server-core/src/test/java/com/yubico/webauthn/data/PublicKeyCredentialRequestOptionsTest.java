@@ -17,7 +17,7 @@ public class PublicKeyCredentialRequestOptionsTest {
             .allowCredentials(Collections.emptyList())
             .allowCredentials(Optional.of(Collections.emptyList()))
             .userVerification(UserVerificationRequirement.PREFERRED)
-            .extensions(AssertionExtensionInputs.builder().build())
+            .extensions(AssertionExtensionInputs.builder().appid(Optional.empty()).build())
         ;
     }
 }
