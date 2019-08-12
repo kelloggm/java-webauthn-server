@@ -89,8 +89,8 @@ subprojects { project ->
   }
 
   dependencies {
-    checkerFramework 'net.sridharan.objectconstruction:object-construction-checker:0.1.2-SNAPSHOT'
-    implementation 'net.sridharan.objectconstruction:object-construction-qual:0.1.2-SNAPSHOT'
+    checkerFramework 'net.sridharan.objectconstruction:object-construction-checker:0.1.2'
+    implementation 'net.sridharan.objectconstruction:object-construction-qual:0.1.2'
   }
 
   test {
