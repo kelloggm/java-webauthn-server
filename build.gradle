@@ -9,8 +9,6 @@ buildscript {
 plugins {
   id 'com.github.kt3k.coveralls' version '2.8.1'
   id 'io.codearte.nexus-staging' version '0.9.0'
-  id "io.freefair.lombok" version "3.6.6"
-  id "org.checkerframework" version "0.3.21" apply false
 }
 
 project.ext.isCiBuild = System.env.CI == 'true'
@@ -52,8 +50,6 @@ subprojects {
 
     maven { url "http://repo.maven.apache.org/maven2" }
   }
-
-  apply plugin: 'org.checkerframework'
 }
 
 evaluationDependsOnChildren()
@@ -73,6 +69,12 @@ subprojects { project ->
 
   tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+    options.compilerArgs += '-processor'
+    options.compilerArgs += 'lombok.launch.AnnotationProcessorHider$AnnotationProcessor,' +
+            'lombok.launch.AnnotationProcessorHider$ClaimingProcessor,' +
+            'org.checkerframework.checker.objectconstruction.ObjectConstructionChecker'
+    options.compilerArgs += '-AsuppressWarnings=type.anno.before'
+    options.compilerArgs += '-Anocheckjdk'
   }
 
   tasks.withType(AbstractArchiveTask) {
@@ -81,16 +83,20 @@ subprojects { project ->
     reproducibleFileOrder = true
   }
 
-  checkerFramework {
-    checkers = ['org.checkerframework.checker.objectconstruction.ObjectConstructionChecker']
-    extraJavacArgs = ['-AsuppressWarnings=type.anno.before']
-    skipVersionCheck = true
-    //excludeTests = true
-  }
-
   dependencies {
-    checkerFramework 'net.sridharan.objectconstruction:object-construction-checker:0.1.2'
+    annotationProcessor 'net.sridharan.objectconstruction:object-construction-checker:0.1.2'
+    annotationProcessor 'org.checkerframework:checker:2.10.0'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
+    testAnnotationProcessor 'net.sridharan.objectconstruction:object-construction-checker:0.1.2'
+    testAnnotationProcessor 'org.checkerframework:checker:2.10.0'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.8'
+
+    implementation 'org.checkerframework:checker-qual:2.10.0'
     implementation 'net.sridharan.objectconstruction:object-construction-qual:0.1.2'
+    
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    testCompileOnly 'org.projectlombok:lombok:1.18.8'
   }
 
   test {
