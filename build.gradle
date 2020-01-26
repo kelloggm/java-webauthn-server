@@ -16,8 +16,8 @@ plugins {
 project.ext.isCiBuild = System.env.CI == 'true'
 
 project.ext.publishEnabled = !isCiBuild &&
-        project.hasProperty('yubicoPublish') && project.yubicoPublish &&
-        project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')
+  project.hasProperty('yubicoPublish') && project.yubicoPublish &&
+  project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')
 
 if (publishEnabled) {
   nexusStaging {
