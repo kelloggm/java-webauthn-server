@@ -4,6 +4,7 @@ plugins {
   id 'scala'
   id 'com.bmuschko.docker-remote-api' version '3.6.1'
   id "io.freefair.lombok"
+  id 'org.checkerframework' version '0.4.11' apply false
 }
 
 lombok {
@@ -66,6 +67,27 @@ dependencies {
     module('javax.servlet:servlet-api') {
       replacedBy('javax.servlet:javax.servlet-api')
     }
+  }
+}
+
+project.apply plugin: 'org.checkerframework'
+
+dependencies {
+  checkerFramework 'net.sridharan.objectconstruction:object-construction-checker:0.1.7-SNAPSHOT'
+  checkerFramework 'org.checkerframework:checker:3.1.1-SNAPSHOT'
+  implementation 'net.sridharan.objectconstruction:object-construction-qual:0.1.7-SNAPSHOT'
+}
+
+checkerFramework {
+  checkers = ['org.checkerframework.checker.objectconstruction.ObjectConstructionChecker']
+  extraJavacArgs = ['-AsuppressWarnings=type.anno.before.decl.anno', '-Awarns']
+  skipVersionCheck = true
+  excludeTests = true
+}
+
+if (project.hasProperty("cfShowChecks")) {
+  checkerFramework {
+    extraJavacArgs += ['-Ashowchecks']
   }
 }
 

@@ -10,7 +10,6 @@ plugins {
   id 'com.github.kt3k.coveralls' version '2.8.1'
   id 'io.codearte.nexus-staging' version '0.9.0'
   id "io.freefair.lombok" version "3.6.6"
-  id "org.checkerframework" version "0.3.20" apply false
 }
 
 project.ext.isCiBuild = System.env.CI == 'true'
@@ -52,8 +51,6 @@ subprojects {
 
     maven { url "https://repo.maven.apache.org/maven2" }
   }
-
-  apply plugin: 'org.checkerframework'
 }
 
 evaluationDependsOnChildren()
@@ -80,30 +77,7 @@ subprojects { project ->
     preserveFileTimestamps = false
     reproducibleFileOrder = true
   }
-
-  checkerFramework {
-    checkers = ['org.checkerframework.checker.objectconstruction.ObjectConstructionChecker']
-    extraJavacArgs = ['-AsuppressWarnings=type.anno.before']
-    skipVersionCheck = true
-    excludeTests = true
-  }
-
-  if (project.hasProperty("cfShowChecks")) {
-    checkerFramework {
-      extraJavacArgs += ['-Ashowchecks']
-    }
-  }
-
-  dependencies {
-    checkerFramework 'net.sridharan.objectconstruction:object-construction-checker:0.1.2-SNAPSHOT'
-    implementation 'net.sridharan.objectconstruction:object-construction-qual:0.1.2-SNAPSHOT'
-
-    compileOnly 'org.checkerframework:checker-qual:2.10.1'
-    testCompileOnly 'org.checkerframework:checker-qual:2.10.1'
-    checkerFramework 'org.checkerframework:checker:2.10.1'
-    checkerFrameworkAnnotatedJDK 'org.checkerframework:jdk8:2.10.1'
-  }
-
+    
   test {
     failFast = true
 
